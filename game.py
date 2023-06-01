@@ -24,6 +24,7 @@ class Game:
         fenetreHauteur = 800 
         fenetreLargeur = 600
         self.screen = pygame.display.set_mode((fenetreHauteur, fenetreLargeur))
+        self.running = True
         
         # definir son nom
         pygame.display.set_caption("Rpg aventure")
@@ -50,6 +51,9 @@ class Game:
             
         elif pressed[pygame.K_RIGHT]:
             self.player.move_right()
+            
+        elif pressed[pygame.K_ESCAPE]:
+            self.running = False 
         
     def update(self):
         """met a jour les deplacement du joueur 
@@ -59,14 +63,11 @@ class Game:
     def run(self):
         """fait tourner le jeu et prend en compte tout les évènements 
         """
-
-        # boucle du jeu
-        running = True
         
         # permet de limiter le nombre de fps
         clock = pygame.time.Clock()
         
-        while running:
+        while self.running:
             
             self.player.save_location()
             self.handle_input()
@@ -77,7 +78,7 @@ class Game:
             for event in pygame.event.get():
                 # verifier si le jouer a quitter la fenetre
                 if event.type == pygame.QUIT:
-                    running = False
+                    self.running = False
                     
             clock.tick(60)
                     
